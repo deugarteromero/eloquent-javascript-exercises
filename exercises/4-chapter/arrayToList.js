@@ -29,9 +29,36 @@ function listToArray(list, array = []){
     return array;
 };
 
+//Helper Function
+function prepend(element, list){
+    let newList = {};
+    newList.value = element;
+    newList.rest = list;
+
+    return newList;
+};
+
+function nth(list, number){
+    let i = 0;
+    let object = list;
+    //Object Updates with the Next Rest Value; No Equal to Identify Correct Value
+    while(object !== null && i < number){
+        object = object.rest; //Replace/Update object
+        i++;
+    };
+
+    return object ? object.value : undefined;
+};
+
 //TESTS
 arrayToList([1, 2, 3]); //Converts to Nested Objects
                         //Result: {value: 1, rest: {value: 2, rest: {value: 3, rest: null}}}
 listToArray(arrayToList([1, 2, 3])); //Converts Back to Array
                                      //Result: [1, 2, 3];
 console.log(listToArray(arrayToList([1, 2, 3])));
+
+console.log(prepend(10, null)); //Result: {value: 10, rest: null}
+console.log(prepend(10, prepend(20, null))); //Result: {value: 10, rest: {value: 20, rest: null}}
+                                             //Multiple Prepend Calls
+
+console.log(nth(arrayToList([1, 2, 3]), 1)); //Return 2
